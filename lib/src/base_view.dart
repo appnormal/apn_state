@@ -1,4 +1,4 @@
-import 'package:an_flutter_state/src/base_state.dart';
+import 'package:apn_state/src/base_state.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';

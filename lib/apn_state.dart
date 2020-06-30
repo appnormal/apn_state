@@ -1,4 +1,4 @@
-library an_flutter_state;
+library apn_state;
 
 export 'src/base_state.dart';
 export 'src/base_view.dart';
