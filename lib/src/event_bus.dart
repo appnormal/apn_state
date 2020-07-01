@@ -1,18 +1,16 @@
 import 'dart:async';
 
-import 'package:get_it/get_it.dart';
-
 /// Primarily used for inter state (state2state) communication
 class EventBus {
   StreamController<BaseEvent> _controller = StreamController<BaseEvent>.broadcast();
 
   /// Destroy this [EventBus]. This is generally only in a testing context.
   ///
-  static void dispose() => _instance()._dispose();
+  static void dispose() => _instance._dispose();
 
   /// Emits a new event on the event bus with the specified [event].
   ///
-  static void emit(BaseEvent event) => _instance()._controller.add(event);
+  static void emit(BaseEvent event) => _instance._controller.add(event);
 
   /// Listens for events of Type [T] and its subtypes.
   ///
@@ -32,14 +30,16 @@ class EventBus {
   static StreamSubscription<T> on<T extends BaseEvent>(void onListen(T)) {
     Stream<BaseEvent> stream;
     if (T == dynamic) {
-      stream = _instance()._controller.stream;
+      stream = _instance._controller.stream;
     } else {
-      stream = _instance()._controller.stream.where((event) => event is T).cast<T>();
+      stream = _instance._controller.stream.where((event) => event is T).cast<T>();
     }
     return stream.listen(onListen, onError: (e) => print(e));
   }
 
-  static EventBus _instance() => GetIt.instance<EventBus>();
+  EventBus._();
+
+  static final EventBus _instance = EventBus._();
 
   void _dispose() => _controller.close();
 }
