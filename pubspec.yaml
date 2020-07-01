@@ -1,7 +1,7 @@
 name: apn_state
 description: A new Appnormal flutter package, providing state management based on Flutter Provider and Event Bus for state to state communication.
 version: 1.0.0
-homepage:
+homepage: https://github.com/appnormal/apn_state
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
