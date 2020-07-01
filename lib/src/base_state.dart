@@ -34,16 +34,17 @@ abstract class BaseState<V> extends ChangeNotifier {
   Future<T> process<T>(ValueGetter<Future<T>> callback) async {
     // * Clear previous error
     error = null;
+    T response;
 
     try {
       setState(ViewState.Busy);
-      return await callback();
+      response = await callback();
     } catch (e) {
       print(e);
       error = convertError(e);
     }
     setState(ViewState.Idle);
-    return null;
+    return response;
   }
 }
 
