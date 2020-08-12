@@ -1,3 +1,7 @@
+## [1.1.1] - 12 August 2020.
+
+* Fix missing generic pass to EvenBus that generated a `CastStreamSubscription` when using BaseState.listen
+
 ## [1.1.0] - 12 August 2020.
 
 * Make Eventbus private and only expose listen and on methods to enforce intended use

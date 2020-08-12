@@ -25,7 +25,7 @@ abstract class BaseState<V> extends ChangeNotifier {
 
   void emit(EventBusEvent event) => EventBus.emit(event);
   StreamSubscription<T> listen<T extends EventBusEvent>(void onListen(T)) {
-     final subscription = EventBus.on(onListen);
+     final subscription = EventBus.on<T>(onListen);
      _subscriptions.add(subscription);
      return subscription;
   }
