@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:apn_state/src/event_bus_event.dart';
+
 /// Primarily used for inter state (state2state) communication
 class EventBus {
-  StreamController<BaseEvent> _controller = StreamController<BaseEvent>.broadcast();
+  StreamController<EventBusEvent> _controller = StreamController<EventBusEvent>.broadcast();
 
   /// Destroy this [EventBus]. This is generally only in a testing context.
   ///
@@ -10,7 +12,7 @@ class EventBus {
 
   /// Emits a new event on the event bus with the specified [event].
   ///
-  static void emit(BaseEvent event) => _instance._controller.add(event);
+  static void emit(EventBusEvent event) => _instance._controller.add(event);
 
   /// Listens for events of Type [T] and its subtypes.
   ///
@@ -27,8 +29,8 @@ class EventBus {
   /// unpaused or canceled. So it's usually better to just cancel and later
   /// subscribe again (avoids memory leak).
   ///
-  static StreamSubscription<T> on<T extends BaseEvent>(void onListen(T)) {
-    Stream<BaseEvent> stream;
+  static StreamSubscription<T> on<T extends EventBusEvent>(void onListen(T)) {
+    Stream<EventBusEvent> stream;
     if (T == dynamic) {
       stream = _instance._controller.stream;
     } else {
@@ -44,4 +46,3 @@ class EventBus {
   void _dispose() => _controller.close();
 }
 
-class BaseEvent {}

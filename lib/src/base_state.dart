@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:apn_state/src/event_bus.dart';
+import 'package:apn_state/src/event_bus_event.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -22,8 +23,8 @@ abstract class BaseState<V> extends ChangeNotifier {
 
   V convertError(dynamic e);
 
-  void emit(BaseEvent event) => EventBus.emit(event);
-  StreamSubscription<T> listen<T extends BaseEvent>(void onListen(T)) {
+  void emit(EventBusEvent event) => EventBus.emit(event);
+  StreamSubscription<T> listen<T extends EventBusEvent>(void onListen(T)) {
      final subscription = EventBus.on(onListen);
      _subscriptions.add(subscription);
      return subscription;
@@ -35,7 +36,7 @@ abstract class BaseState<V> extends ChangeNotifier {
     super.dispose();
   }
 
-  Future<T> dispatch<E extends BaseStateEvent<T>, T extends BaseState<V>>(E event) async {
+  Future<T> dispatch<E extends BaseStateEvent, T extends BaseState>(E event) async {
     event.state = this;
     await event.handle();
     return event.state;
