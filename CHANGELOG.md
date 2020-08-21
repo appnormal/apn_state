@@ -1,3 +1,9 @@
+## [1.2.0] - 21 August 2020.
+
+* Make listen and emit protected (force them to be used within a state class)
+* Add example usage
+* Add a few comments
+
 ## [1.1.1] - 12 August 2020.
 
 * Fix missing generic pass to EvenBus that generated a `CastStreamSubscription` when using BaseState.listen

@@ -45,4 +45,3 @@ class EventBus {
 
   void _dispose() => _controller.close();
 }
-
