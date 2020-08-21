@@ -89,9 +89,4 @@ abstract class BaseStateEvent<S extends BaseState> {
   /// Emit an event that can be picked up by all other states
   @protected
   void emit(EventBusEvent event) => state.emit(event);
-
-  /// Listen to a specific type of event. This automatically closes
-  /// the listener when the state is disposed
-  @protected
-  StreamSubscription<T> listen<T extends EventBusEvent>(void onListen(T)) => state.listen(onListen);
 }

@@ -1,9 +1,7 @@
-## [1.2.1] - 21 August 2020.
+## [1.2.2] - 21 August 2020.
 
+* Bugfix
 * Allow events to make use of the emit function in the state objects
-
-## [1.2.0] - 21 August 2020.
-
 * Make listen and emit protected (force them to be used within a state class)
 * Add example usage
 * Add a few comments
