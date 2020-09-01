@@ -29,14 +29,14 @@ class EventBus {
   /// unpaused or canceled. So it's usually better to just cancel and later
   /// subscribe again (avoids memory leak).
   ///
-  static StreamSubscription<T> on<T extends EventBusEvent>(void onListen(T)) {
+  static StreamSubscription<T> on<T extends EventBusEvent>(EventBusEventListener<T> onListen) {
     Stream<EventBusEvent> stream;
     if (T == dynamic) {
       stream = _instance._controller.stream;
     } else {
       stream = _instance._controller.stream.where((event) => event is T).cast<T>();
     }
-    return stream.listen(onListen, onError: (e) => print(e));
+    return stream.listen((e) => onListen(e as T), onError: (e) => print(e));
   }
 
   EventBus._();
@@ -45,3 +45,5 @@ class EventBus {
 
   void _dispose() => _controller.close();
 }
+
+typedef EventBusEventListener<T> = void Function(T event);

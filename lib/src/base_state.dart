@@ -90,5 +90,3 @@ abstract class BaseStateEvent<S extends BaseState> {
   @protected
   void emit(EventBusEvent event) => state.emit(event);
 }
-
-typedef EventBusEventListener<T> = void Function(T event);
