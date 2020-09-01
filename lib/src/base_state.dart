@@ -29,7 +29,7 @@ abstract class BaseState<V> extends ChangeNotifier {
   /// Listen to a specific type of event. This automatically closes
   /// the listener when the state is disposed
   @protected
-  StreamSubscription<T> listen<T extends EventBusEvent>(void onListen(T)) {
+  StreamSubscription<T> listen<T extends EventBusEvent>(EventBusEventListener<T> onListen) {
     final subscription = EventBus.on<T>(onListen);
     _subscriptions.add(subscription);
     return subscription;
@@ -90,3 +90,5 @@ abstract class BaseStateEvent<S extends BaseState> {
   @protected
   void emit(EventBusEvent event) => state.emit(event);
 }
+
+typedef EventBusEventListener<T> = void Function(T event);

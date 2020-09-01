@@ -1,3 +1,7 @@
+## [1.2.3] - 1 September 2020.
+
+* Make listen function callback properly set the event type on the callback
+
 ## [1.2.2] - 21 August 2020.
 
 * Bugfix
