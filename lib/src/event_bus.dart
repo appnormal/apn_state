@@ -4,7 +4,7 @@ import 'package:apn_state/src/event_bus_event.dart';
 
 /// Primarily used for inter state (state2state) communication
 class EventBus {
-  StreamController<EventBusEvent> _controller = StreamController<EventBusEvent>.broadcast();
+  final _controller = StreamController<EventBusEvent>.broadcast();
 
   /// Destroy this [EventBus]. This is generally only in a testing context.
   ///

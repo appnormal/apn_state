@@ -57,6 +57,7 @@ abstract class BaseState<V> extends ChangeNotifier {
   /// We allow calling the notifyListeners on our state
   /// objects. So we publicly expose it (in stead of relying
   /// on the parents @protected)
+  @override
   void notifyListeners() => super.notifyListeners();
 
   /// Asynchronously handle the callback and automatically set the state loading.

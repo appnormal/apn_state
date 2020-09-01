@@ -1,5 +1,6 @@
-## [1.2.4] - 1 September 2020.
+## [1.2.5] - 1 September 2020.
 
+* Fix analysis errors
 * Make listen function callback properly set the event type on the callback
 
 ## [1.2.2] - 21 August 2020.
