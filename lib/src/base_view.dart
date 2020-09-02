@@ -13,7 +13,8 @@ class BaseConsumerView<T extends BaseState> extends StatefulWidget {
   _BaseConsumerViewState<T> createState() => _BaseConsumerViewState<T>();
 }
 
-class _BaseConsumerViewState<T extends BaseState> extends State<BaseConsumerView<T>> {
+class _BaseConsumerViewState<T extends BaseState>
+    extends State<BaseConsumerView<T>> {
   T model = GetIt.instance<T>();
 
   @override
@@ -44,7 +45,8 @@ class BaseSelectorView<T extends BaseState, O> extends StatefulWidget {
   _BaseSelectorViewState<T, O> createState() => _BaseSelectorViewState<T, O>();
 }
 
-class _BaseSelectorViewState<T extends BaseState, O> extends State<BaseSelectorView<T, O>> {
+class _BaseSelectorViewState<T extends BaseState, O>
+    extends State<BaseSelectorView<T, O>> {
   T model = GetIt.instance<T>();
 
   @override

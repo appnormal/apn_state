@@ -1,3 +1,8 @@
+## [1.2.6] - 2 September 2020.
+
+* Switch from pendantic to lint package for analysis
+* Fix new lint issues
+
 ## [1.2.5] - 1 September 2020.
 
 * Fix analysis errors

@@ -8,7 +8,8 @@ import 'package:provider/provider.dart';
 enum ViewState { Idle, Busy }
 
 abstract class BaseState<V> extends ChangeNotifier {
-  static T of<T>(BuildContext context, {bool listen = true}) => Provider.of<T>(context, listen: listen);
+  static T of<T>(BuildContext context, {bool listen = true}) =>
+      Provider.of<T>(context, listen: listen);
   final _subscriptions = <StreamSubscription>[];
 
   ViewState _state = ViewState.Idle;
@@ -29,7 +30,8 @@ abstract class BaseState<V> extends ChangeNotifier {
   /// Listen to a specific type of event. This automatically closes
   /// the listener when the state is disposed
   @protected
-  StreamSubscription<T> listen<T extends EventBusEvent>(EventBusEventListener<T> onListen) {
+  StreamSubscription<EventBusEvent> listen<T extends EventBusEvent>(
+      EventBusEventListener<T> onListen) {
     final subscription = EventBus.on<T>(onListen);
     _subscriptions.add(subscription);
     return subscription;
@@ -43,10 +45,12 @@ abstract class BaseState<V> extends ChangeNotifier {
     super.dispose();
   }
 
-  Future<T> dispatch<E extends BaseStateEvent, T extends BaseState>(E event) async {
+  Future<T> dispatch<E extends BaseStateEvent, T extends BaseState>(
+    E event,
+  ) async {
     event.state = this;
     await event.handle();
-    return event.state;
+    return event.state as T;
   }
 
   void setState(ViewState viewState) {
@@ -61,7 +65,8 @@ abstract class BaseState<V> extends ChangeNotifier {
   void notifyListeners() => super.notifyListeners();
 
   /// Asynchronously handle the callback and automatically set the state loading.
-  Future<T> process<T>(ValueGetter<Future<T>> callback, [handleLoading = true]) async {
+  Future<T> process<T>(ValueGetter<Future<T>> callback,
+      [bool handleLoading = true]) async {
     // * Clear previous error
     error = null;
     T response;
