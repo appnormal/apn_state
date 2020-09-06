@@ -1,3 +1,7 @@
+## [1.2.7] - 6 September 2020.
+
+* Remove print function call on error 
+
 ## [1.2.6] - 2 September 2020.
 
 * Switch from pendantic to lint package for analysis

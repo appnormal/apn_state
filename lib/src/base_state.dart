@@ -75,7 +75,6 @@ abstract class BaseState<V> extends ChangeNotifier {
       if (handleLoading) setState(ViewState.Busy);
       response = await callback();
     } catch (e) {
-      print(e);
       error = convertError(e);
     }
 
