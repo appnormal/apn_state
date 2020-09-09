@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 void main() {
-  // Register your states
+  // Optionally register your states (you can also use create => T)
   GetIt.I.registerFactory(() => CounterState());
 
   // Run the app

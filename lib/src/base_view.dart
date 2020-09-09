@@ -5,20 +5,26 @@ import 'package:provider/provider.dart';
 
 class BaseConsumerView<T extends BaseState> extends StatefulWidget {
   final Widget Function(BuildContext context, T model, Widget child) builder;
+  final T Function() create;
   final Function(T) onModelReady;
 
-  BaseConsumerView({this.builder, this.onModelReady});
+  BaseConsumerView({this.builder, this.onModelReady, this.create});
 
   @override
   _BaseConsumerViewState<T> createState() => _BaseConsumerViewState<T>();
 }
 
-class _BaseConsumerViewState<T extends BaseState>
-    extends State<BaseConsumerView<T>> {
-  T model = GetIt.instance<T>();
+class _BaseConsumerViewState<T extends BaseState> extends State<BaseConsumerView<T>> {
+  T model;
 
   @override
   void initState() {
+    if (widget.create != null) {
+      model = widget.create();
+    } else {
+      model = GetIt.instance<T>();
+    }
+
     if (widget.onModelReady != null) {
       widget.onModelReady(model);
     }
@@ -37,20 +43,26 @@ class _BaseConsumerViewState<T extends BaseState>
 class BaseSelectorView<T extends BaseState, O> extends StatefulWidget {
   final Widget Function(BuildContext context, O model, Widget child) builder;
   final O Function(BuildContext, T) selector;
+  final T Function() create;
   final Function(T) onModelReady;
 
-  BaseSelectorView({this.builder, this.selector, this.onModelReady});
+  BaseSelectorView({this.builder, this.create, this.selector, this.onModelReady});
 
   @override
   _BaseSelectorViewState<T, O> createState() => _BaseSelectorViewState<T, O>();
 }
 
-class _BaseSelectorViewState<T extends BaseState, O>
-    extends State<BaseSelectorView<T, O>> {
-  T model = GetIt.instance<T>();
+class _BaseSelectorViewState<T extends BaseState, O> extends State<BaseSelectorView<T, O>> {
+  T model;
 
   @override
   void initState() {
+    if (widget.create != null) {
+      model = widget.create();
+    } else {
+      model = GetIt.instance<T>();
+    }
+
     if (widget.onModelReady != null) {
       widget.onModelReady(model);
     }

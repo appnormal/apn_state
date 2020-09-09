@@ -1,3 +1,7 @@
+## [1.2.8] - 8 September 2020.
+
+* Add ability to create a state object without resolving from get_it
+
 ## [1.2.7] - 6 September 2020.
 
 * Remove print function call on error 
