@@ -1,3 +1,7 @@
+## [1.2.8] - 22 October 2020.
+
+* Add ability disable pagination to avoid errors
+
 ## [1.2.8] - 8 September 2020.
 
 * Add ability to create a state object without resolving from get_it

@@ -8,9 +8,12 @@ import 'package:provider/provider.dart';
 enum ViewState { Idle, Busy }
 
 abstract class BaseState<V> extends ChangeNotifier {
-  static T of<T>(BuildContext context, {bool listen = true}) =>
-      Provider.of<T>(context, listen: listen);
+  static T of<T>(BuildContext context, {bool listen = true}) => Provider.of<T>(context, listen: listen);
   final _subscriptions = <StreamSubscription>[];
+
+  bool isDisposed = false;
+
+  bool enablePagination = true;
 
   ViewState _state = ViewState.Idle;
   V error;
@@ -30,8 +33,7 @@ abstract class BaseState<V> extends ChangeNotifier {
   /// Listen to a specific type of event. This automatically closes
   /// the listener when the state is disposed
   @protected
-  StreamSubscription<EventBusEvent> listen<T extends EventBusEvent>(
-      EventBusEventListener<T> onListen) {
+  StreamSubscription<EventBusEvent> listen<T extends EventBusEvent>(EventBusEventListener<T> onListen) {
     final subscription = EventBus.on<T>(onListen);
     _subscriptions.add(subscription);
     return subscription;
@@ -42,6 +44,7 @@ abstract class BaseState<V> extends ChangeNotifier {
   @override
   void dispose() {
     _subscriptions.forEach((sub) => sub.cancel());
+    isDisposed = true;
     super.dispose();
   }
 
@@ -61,12 +64,13 @@ abstract class BaseState<V> extends ChangeNotifier {
   /// We allow calling the notifyListeners on our state
   /// objects. So we publicly expose it (in stead of relying
   /// on the parents @protected)
-  @override
-  void notifyListeners() => super.notifyListeners();
+  void notifyListeners() {
+    if (isDisposed) return;
+    super.notifyListeners();
+  }
 
   /// Asynchronously handle the callback and automatically set the state loading.
-  Future<T> process<T>(ValueGetter<Future<T>> callback,
-      [bool handleLoading = true]) async {
+  Future<T> process<T>(ValueGetter<Future<T>> callback, [bool handleLoading = true]) async {
     // * Clear previous error
     error = null;
     T response;
