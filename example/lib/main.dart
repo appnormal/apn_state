@@ -1,11 +1,7 @@
 import 'package:apn_state/apn_state.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 
 void main() {
-  // Optionally register your states (you can also use create => T)
-  GetIt.I.registerFactory(() => CounterState());
-
   // Run the app
   runApp(MyApp());
 }
@@ -34,37 +30,39 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        builder: (context, child) {
-          return BaseConsumerView<CounterState>(
-            builder: (context, state, child) => Scaffold(
-              appBar: AppBar(
-                title: Text('State example'),
-              ),
-              body: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'You have pushed the button this many times:',
-                    ),
-                    Text(
-                      '${state.counter}',
-                      style: Theme.of(context).textTheme.headline4,
-                    ),
-                  ],
-                ),
-              ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: () => state.dispatch(IncrementCounterEvent()),
-                child: Icon(Icons.add),
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      builder: (context, child) {
+        return BaseConsumerView<CounterState>(
+          create: () => CounterState(),
+          builder: (context, state, child) => Scaffold(
+            appBar: AppBar(
+              title: Text('State example'),
+            ),
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'You have pushed the button this many times:',
+                  ),
+                  Text(
+                    '${state.counter}',
+                    style: Theme.of(context).textTheme.headline4,
+                  ),
+                ],
               ),
             ),
-          );
-        });
+            floatingActionButton: FloatingActionButton(
+              onPressed: () => state.dispatch(IncrementCounterEvent()),
+              child: Icon(Icons.add),
+            ),
+          ),
+        );
+      },
+    );
   }
 }

@@ -1,3 +1,9 @@
+## [2.0.0] - 18 March 2021.
+
+* Null-safety
+* Remove get-it as a dependency
+* [Breaking] Force using create method to make state objects
+
 ## [1.2.8] - 22 October 2020.
 
 * Add ability disable pagination to avoid errors
@@ -8,7 +14,7 @@
 
 ## [1.2.7] - 6 September 2020.
 
-* Remove print function call on error 
+* Remove print function call on error
 
 ## [1.2.6] - 2 September 2020.
 

@@ -16,7 +16,7 @@ abstract class BaseState<V> extends ChangeNotifier {
   bool enablePagination = true;
 
   ViewState _state = ViewState.Idle;
-  V error;
+  V? error;
 
   ViewState get state => _state;
 
@@ -70,10 +70,10 @@ abstract class BaseState<V> extends ChangeNotifier {
   }
 
   /// Asynchronously handle the callback and automatically set the state loading.
-  Future<T> process<T>(ValueGetter<Future<T>> callback, [bool handleLoading = true]) async {
+  Future<T?> process<T>(ValueGetter<Future<T>> callback, [bool handleLoading = true]) async {
     // * Clear previous error
     error = null;
-    T response;
+    T? response = null;
 
     try {
       if (handleLoading) setState(ViewState.Busy);
@@ -90,7 +90,7 @@ abstract class BaseState<V> extends ChangeNotifier {
 abstract class BaseStateEvent<S extends BaseState> {
   /// Allows access anywhere in the event
   /// without explicitly passing it around
-  S state;
+  late S state;
 
   /// Handle the event
   Future<void> handle();
