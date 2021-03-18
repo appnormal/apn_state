@@ -1,3 +1,7 @@
+## [2.0.1] - 18 March 2021.
+
+* Make convertError response nullable
+
 ## [2.0.0] - 18 March 2021.
 
 * Null-safety
