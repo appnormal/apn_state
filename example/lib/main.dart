@@ -11,7 +11,7 @@ class CounterState extends BaseState<String> {
   int counter = 0;
 
   @override
-  String convertError(e) {
+  String? convertError(e) {
     print(e);
     return 'Something went wrong';
   }

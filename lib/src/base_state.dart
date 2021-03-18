@@ -24,7 +24,7 @@ abstract class BaseState<V> extends ChangeNotifier {
 
   bool get hasError => error != null;
 
-  V convertError(dynamic e);
+  V? convertError(dynamic e);
 
   /// Emit an event that can be picked up by all other states
   @protected
