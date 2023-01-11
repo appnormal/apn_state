@@ -1,3 +1,7 @@
+## [3.0.0] - Jan 2023
+
+* Removed EventBus
+
 ## [2.0.1] - 18 March 2021.
 
 * Make convertError response nullable

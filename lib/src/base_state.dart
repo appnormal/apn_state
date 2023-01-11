@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:apn_state/src/event_bus.dart';
-import 'package:apn_state/src/event_bus_event.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -26,24 +24,13 @@ abstract class BaseState<V> extends ChangeNotifier {
 
   V? convertError(dynamic e);
 
-  /// Emit an event that can be picked up by all other states
-  @protected
-  void emit(EventBusEvent event) => EventBus.emit(event);
-
-  /// Listen to a specific type of event. This automatically closes
-  /// the listener when the state is disposed
-  @protected
-  StreamSubscription<EventBusEvent> listen<T extends EventBusEvent>(EventBusEventListener<T> onListen) {
-    final subscription = EventBus.on<T>(onListen);
-    _subscriptions.add(subscription);
-    return subscription;
-  }
-
   /// Make sure to implement the super.dispose() when
   /// overriding this method
   @override
   void dispose() {
-    _subscriptions.forEach((sub) => sub.cancel());
+    for (final sub in _subscriptions) {
+      sub.cancel();
+    }
     isDisposed = true;
     super.dispose();
   }
@@ -64,6 +51,7 @@ abstract class BaseState<V> extends ChangeNotifier {
   /// We allow calling the notifyListeners on our state
   /// objects. So we publicly expose it (in stead of relying
   /// on the parents @protected)
+  @override
   void notifyListeners() {
     if (isDisposed) return;
     super.notifyListeners();
@@ -73,7 +61,7 @@ abstract class BaseState<V> extends ChangeNotifier {
   Future<T?> process<T>(ValueGetter<Future<T>> callback, [bool handleLoading = true]) async {
     // * Clear previous error
     error = null;
-    T? response = null;
+    T? response;
 
     try {
       if (handleLoading) setState(ViewState.Busy);
@@ -94,8 +82,4 @@ abstract class BaseStateEvent<S extends BaseState> {
 
   /// Handle the event
   Future<void> handle();
-
-  /// Emit an event that can be picked up by all other states
-  @protected
-  void emit(EventBusEvent event) => state.emit(event);
 }
